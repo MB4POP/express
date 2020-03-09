@@ -10,26 +10,36 @@ app.use('/user/', (req, res, next) => {
    res.render('forbidden', { layout: false });
 });
 
+app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 'main' }));
+
 app.use(express.static(path.join(__dirname + '/public')));
 
 app.get('/', (req, res) => {
-  res.render('home', { layout: false });
+  res.render('home');
 });
 
 app.get('/home', (req, res) => {
-  res.render('home', { layout: false });
+  res.render('home');
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { layout: false });
+  res.render('about');
 });
 
-app.get('/hello/:name', (req, res) => {
-  res.render('hello', { layout: false, name: req.params.name });
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
+
+app.get('/info', (req, res) => {
+  res.render('info');
+});
+
+app.get('/history', (req, res) => {
+  res.render('history');
 });
 
 app.use((req, res) => {
-  res.status(404).show('404.html');
+  res.render('404');
 })
 
 app.listen(8000, () => {

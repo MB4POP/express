@@ -13,6 +13,7 @@ app.use('/user/', (req, res, next) => {
 app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 'main' }));
 
 app.use(express.static(path.join(__dirname + '/public')));
+app.use(express.static(path.join(__dirname + '/views/layout')));
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -40,15 +41,19 @@ app.get('/history', (req, res) => {
   res.render('history');
 });
 
+app.get('/hello/:name', (req, res) => {
+  res.render('hello', { name: req.params.name } );
+});
+
 app.post('/contact/send-message', (req, res) => {
 
-  const { author, sender, title, message, accept } = req.body;
+  const { author, sender, title, message, image } = req.body;
 
-  if(author && sender && title && message && accept) {
-    res.render('contact', { isSent: true });
+  if(author && sender && title && message && image) {
+    res.render('contact', { isSent: true, image: req.params.image });
   }
   else {
-    res.render('contact', { isError: true });
+    res.render('contact', { isError: true, });
   }
 
 });
